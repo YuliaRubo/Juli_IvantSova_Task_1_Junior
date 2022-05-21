@@ -54,7 +54,12 @@ import java.util.Map;
         public String deleteCity(){
            return "Delete cache Successfully";
         }
+        @CacheEvict(value = "city-zip-cache")
+        public void deleteOneCity(String cityName){
+            cityZipCodeMap.remove(cityName);
 
+
+        }
 
 
     }

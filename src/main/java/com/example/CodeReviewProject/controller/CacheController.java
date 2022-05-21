@@ -44,4 +44,9 @@ public class CacheController {
     public String deleteCity(){
         return cacheService.deleteCity();
     }
+
+    @DeleteMapping("/delete")
+    public void deleteCityFromMap(@RequestParam("name") String name){
+         cacheService.deleteOneCity(name);
+    }
 }
