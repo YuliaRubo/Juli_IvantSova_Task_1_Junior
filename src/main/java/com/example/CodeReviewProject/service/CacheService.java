@@ -10,10 +10,12 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 
-    @Service
+@Service
     public class CacheService {
         @Autowired
         CacheManager cacheManager;
@@ -30,14 +32,17 @@ import java.util.Map;
 
         public Map<String,City> getAllCity(){
             return cityZipCodeMap;
-
         }
+
+
 
         @Cacheable(value = "city-zip-cache")
         public City getZipCode(String cityName){
             System.out.println("getZipCode method called");
             return cityZipCodeMap.get(cityName);
         }
+
+
 
         public Cache getCacheByName(String cacheName){
             return  cacheManager.getCache(cacheName);
@@ -46,6 +51,7 @@ import java.util.Map;
         @CachePut(value = "city-zip-cache", key = "#city.cityName")
         public City putNewCity(City city){
            cityZipCodeMap.put(city.getCityName(),city);
+            System.out.println("City add to Cache");
            return city;
         }
 
@@ -54,6 +60,7 @@ import java.util.Map;
         public String deleteCity(){
            return "Delete cache Successfully";
         }
+
         @CacheEvict(value = "city-zip-cache")
         public void deleteOneCity(String cityName){
             cityZipCodeMap.remove(cityName);
